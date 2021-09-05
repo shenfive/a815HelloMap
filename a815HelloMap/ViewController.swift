@@ -8,7 +8,7 @@
 import UIKit
 import MapKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CLLocationManagerDelegate {
 
     @IBOutlet weak var theMapView: MKMapView!
     
@@ -34,27 +34,42 @@ class ViewController: UIViewController {
         locationManager = CLLocationManager()
         locationManager?.requestWhenInUseAuthorization()
         
-        if let location = locationManager?.location?.coordinate{
-            let xScale:CLLocationDegrees = 0.0001
-            let yScale:CLLocationDegrees = 0.0001
-            let span:MKCoordinateSpan =
-                MKCoordinateSpan(latitudeDelta: yScale, longitudeDelta: xScale)
-            let region:MKCoordinateRegion =
-                MKCoordinateRegion.init(center: location, span: span)
-            self.theMapView.setRegion(region, animated: true)
-            
-            let theAnnotation = MKPointAnnotation()
-            theAnnotation.coordinate = location
-            theAnnotation.title = "譯智"
-            theAnnotation.subtitle = "教育訓練中心"
-            self.theMapView.addAnnotation(theAnnotation)
-        }
+        locationManager?.delegate = self
+        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager?.activityType = .automotiveNavigation
+        locationManager?.startUpdatingLocation()
+        
+        theMapView.userTrackingMode = .followWithHeading
+
+        
+//
+//        if let location = locationManager?.location?.coordinate{
+//            let xScale:CLLocationDegrees = 0.0001
+//            let yScale:CLLocationDegrees = 0.0001
+//            let span:MKCoordinateSpan =
+//                MKCoordinateSpan(latitudeDelta: yScale, longitudeDelta: xScale)
+//            let region:MKCoordinateRegion =
+//                MKCoordinateRegion.init(center: location, span: span)
+//            self.theMapView.setRegion(region, animated: true)
+//
+//            let theAnnotation = MKPointAnnotation()
+//            theAnnotation.coordinate = location
+//            theAnnotation.title = "譯智"
+//            theAnnotation.subtitle = "教育訓練中心"
+//            self.theMapView.addAnnotation(theAnnotation)
+//        }
         
 
         
             
 //        }
     }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let coordinate = locations[0].coordinate
+        print(coordinate)
+    }
+
     
     
     @IBAction func setMapType(_ sender: UISegmentedControl) {
