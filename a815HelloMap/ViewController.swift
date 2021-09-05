@@ -13,6 +13,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var theMapView: MKMapView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        theMapView.isScrollEnabled = false
         // Do any additional setup after loading the view.
     }
 
