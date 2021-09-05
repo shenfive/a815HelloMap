@@ -21,9 +21,9 @@ class ViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             let latitude:CLLocationDegrees = 25.0443651
-            let longitude:CLLocationDegrees = 121.5132172
+            let longitude:CLLocationDegrees = 121.5133274
             let location:CLLocationCoordinate2D =
                 CLLocationCoordinate2DMake(latitude, longitude)
             let xScale:CLLocationDegrees = 0.0001
@@ -33,6 +33,14 @@ class ViewController: UIViewController {
             let region:MKCoordinateRegion =
                 MKCoordinateRegion.init(center: location, span: span)
             self.theMapView.setRegion(region, animated: true)
+            
+            let theAnnotation = MKPointAnnotation()
+            theAnnotation.coordinate = location
+            theAnnotation.title = "譯智"
+            theAnnotation.subtitle = "教育訓練中心"
+            self.theMapView.addAnnotation(theAnnotation)
+            
+            
         }
     }
     
