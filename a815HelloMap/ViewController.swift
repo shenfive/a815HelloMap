@@ -11,21 +11,30 @@ import MapKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var theMapView: MKMapView!
+    
+    var locationManager:CLLocationManager? = nil
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        theMapView.isScrollEnabled = false
+//        theMapView.isScrollEnabled = false
         // Do any additional setup after loading the view.
     }
 
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            let latitude:CLLocationDegrees = 25.0443651
-            let longitude:CLLocationDegrees = 121.5133274
-            let location:CLLocationCoordinate2D =
-                CLLocationCoordinate2DMake(latitude, longitude)
+        
+//        let latitude:CLLocationDegrees = 25.0443651
+//        let longitude:CLLocationDegrees = 121.5133274
+//        let location:CLLocationCoordinate2D =
+//            CLLocationCoordinate2DMake(latitude, longitude)
+        
+        locationManager = CLLocationManager()
+        locationManager?.requestWhenInUseAuthorization()
+        
+        if let location = locationManager?.location?.coordinate{
             let xScale:CLLocationDegrees = 0.0001
             let yScale:CLLocationDegrees = 0.0001
             let span:MKCoordinateSpan =
@@ -39,9 +48,12 @@ class ViewController: UIViewController {
             theAnnotation.title = "譯智"
             theAnnotation.subtitle = "教育訓練中心"
             self.theMapView.addAnnotation(theAnnotation)
-            
-            
         }
+        
+
+        
+            
+//        }
     }
     
     
